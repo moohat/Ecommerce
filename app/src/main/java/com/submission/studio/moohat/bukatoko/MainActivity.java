@@ -3,6 +3,9 @@ package com.submission.studio.moohat.bukatoko;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,11 +18,49 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
+import com.submission.studio.moohat.bukatoko.adapter.ProductAdapter;
+import com.submission.studio.moohat.bukatoko.data.model.Product;
+import com.submission.studio.moohat.bukatoko.data.retrofit.Api;
+import com.submission.studio.moohat.bukatoko.data.retrofit.ApiInterface;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     MaterialSearchView searchView;
+    RecyclerView recyclerView;
+
+    private void getProducts(){
+        ApiInterface apiInterface = Api.getUrl().create(ApiInterface.class);
+
+        Call<Product> call = apiInterface.getProducts();
+        call.enqueue(new Callback<Product>() {
+            @Override
+            public void onResponse(Call<Product> call, Response<Product> response) {
+                Product product = response.body();
+                List<Product.Data> products = product.getProducts();
+
+                Log.e("_logSizeProducts", String.valueOf(products.size()));
+
+                recyclerView.setAdapter(new ProductAdapter(products, MainActivity.this));
+
+                for (int i=0; i< products.size(); i++){
+                    Log.e("_logNameProducts", products.get(i).getProduct());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Product> call, Throwable t) {
+
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +117,14 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        recyclerView = findViewById(R.id.recyclerView);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 2);
+        recyclerView.setLayoutManager(layoutManager);
+
+        getProducts();
+
+
     }
 
     @Override

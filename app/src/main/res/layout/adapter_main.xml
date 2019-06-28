@@ -3,6 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="250dp">
 
+    <ImageView
+        android:id="@+id/imgProd"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:src="@drawable/no_profile"/>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -13,6 +18,7 @@
         android:layout_alignParentRight="true">
 
         <TextView
+            android:id="@+id/txtPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/lorem_ipsum"
@@ -22,6 +28,7 @@
             android:textColor="@color/colorWhite"
             android:background="@color/colorPrimary"/>
         <TextView
+            android:id="@+id/txtName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/lorem_ipsum"
@@ -29,9 +36,5 @@
             android:textStyle="bold"
             android:background="@color/colorWhite"/>
     </LinearLayout>
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:src="@drawable/no_profile"/>
 
 </RelativeLayout>
