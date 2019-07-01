@@ -22,9 +22,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     private List<Product.Data> products;
     Context context;
 
-    public ProductAdapter(List<Product.Data> data, Context context) {
-        this.products = data;
+    public ProductAdapter(Context context, List<Product.Data> data ) {
         this.context = context;
+        this.products = data;
     }
 
     @NonNull
@@ -40,16 +40,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         int price = products.get(i).getPrice();
         viewHolder.txtPrice.setText(String.valueOf(price));
 
-
-
-
         RequestOptions options = new RequestOptions()
                 .centerCrop()
                 .placeholder(R.drawable.image_icon_png_thumbnail)
                 .error(R.drawable.image_icon_png_notfound)
                 .priority(Priority.HIGH);
-
-
+//
         Glide.with(context)
                 .load(products.get(i).getImage())
                 .apply(options)

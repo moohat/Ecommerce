@@ -47,11 +47,10 @@ public class MainActivity extends AppCompatActivity
 
                 Log.e("_logSizeProducts", String.valueOf(products.size()));
 
-                recyclerView.setAdapter(new ProductAdapter(products, MainActivity.this));
+                recyclerView.setAdapter(new ProductAdapter(MainActivity.this, products ));
 
                 for (int i=0; i< products.size(); i++){
-                    Log.e("_logNameProducts", products.get(i).getProduct());
-
+                    Log.e("_logNameProducts", products.get(i).getImage());
                 }
             }
 
