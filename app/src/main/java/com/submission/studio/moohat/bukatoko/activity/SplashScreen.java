@@ -1,9 +1,11 @@
-package com.submission.studio.moohat.bukatoko;
+package com.submission.studio.moohat.bukatoko.activity;
 
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.submission.studio.moohat.bukatoko.R;
 
 public class SplashScreen extends AppCompatActivity {
 

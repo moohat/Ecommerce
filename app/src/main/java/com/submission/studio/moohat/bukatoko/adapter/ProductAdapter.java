@@ -1,6 +1,7 @@
 package com.submission.studio.moohat.bukatoko.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,7 +14,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.request.RequestOptions;
 import com.submission.studio.moohat.bukatoko.R;
+import com.submission.studio.moohat.bukatoko.activity.DetailActivity;
+import com.submission.studio.moohat.bukatoko.activity.MainActivity;
 import com.submission.studio.moohat.bukatoko.data.model.Product;
+import com.submission.studio.moohat.bukatoko.utils.Converter;
 
 import java.util.List;
 
@@ -35,10 +39,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
         viewHolder.txtName.setText(products.get(i).getProduct());
-        int price = products.get(i).getPrice();
-        viewHolder.txtPrice.setText(String.valueOf(price));
+//        int price = products.get(i).getPrice();
+
+        viewHolder.txtPrice.setText("IDR "+Converter.rupiah(products.get(i).getPrice()));
 
         RequestOptions options = new RequestOptions()
                 .centerCrop()
@@ -50,6 +55,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 .load(products.get(i).getImage())
                 .apply(options)
                 .into(viewHolder.imgProd);
+
+        viewHolder.imgProd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, DetailActivity.class);
+                intent.putExtra("PRODUCT_ID", products.get(i).getId());
+                intent.putExtra("PRODUCT_IMAGE", products.get(i).getImage());
+                context.startActivity(intent);
+            }
+        });
 
     }
 
